@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.example.gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +16,8 @@ public class HelloController implements Initializable {
 
     @FXML
     void getScheduler(ContextMenuEvent event) {
-         String scheduler = schedulers.getSelectionModel().getSelectedItem();
-         System.out.println(scheduler);
+        String scheduler = schedulers.getSelectionModel().getSelectedItem();
+        System.out.println(scheduler);
 
     }
 
