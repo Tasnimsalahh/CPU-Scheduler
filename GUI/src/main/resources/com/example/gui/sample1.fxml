@@ -5,22 +5,30 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane fx:id="a" prefHeight="543.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller1">
    <children>
-      <Text layoutX="61.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
-      <Text layoutX="248.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
-      <Text layoutX="50.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm">
+      <Text layoutX="29.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
+      <Text layoutX="29.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
+      <Text layoutX="29.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="19.0" />
          </font>
       </Text>
-      <Label fx:id="algorithmType" layoutX="204.0" layoutY="89.0" prefHeight="18.0" prefWidth="140.0" text="Label">
+      <Label fx:id="algorithmType" layoutX="152.0" layoutY="43.0" prefHeight="22.0" prefWidth="84.0" style="-fx-background-color: yellow;">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="waitingField" layoutX="93.0" layoutY="382.0" text="Label" />
-      <Label fx:id="turnaroundField" layoutX="287.0" layoutY="373.0" text="Label" />
+      <Label fx:id="waitingField" ellipsisString="" layoutX="190.0" layoutY="301.0" lineSpacing="5.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: lightblue;" />
+      <Label fx:id="turnaroundField" layoutX="190.0" layoutY="340.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: lightblue;" />
+      <Text layoutX="281.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Processes" />
+      <Text layoutX="389.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining burst time" />
+      <Text layoutX="535.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting time" />
+      <Text layoutX="638.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority" />
+      <Text layoutX="29.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gantt chart">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
