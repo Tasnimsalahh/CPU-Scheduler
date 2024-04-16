@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Mark
  */
-public abstract class Scheduler extends Thread {
+public abstract class Scheduler {
 
     protected List<Job> jobs;
     protected int currentTime;
@@ -65,15 +65,10 @@ public abstract class Scheduler extends Thread {
         return currentTime;
     }
 
-    @Override
-    public void run() {
-        //Might be used to enqueue new jobs from the user
-    }
+    public abstract Job startScheduler(); //main schdeuling algorithm
 
-    public abstract void startScheduler(); //main schdeuling algorithm
+    public abstract void enqueue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
 
-    public abstract void enqueue(); // might be used to enqueue jobs in the list according to the used algorithm
-
-    public abstract void dequeue(); // might be used to enqueue jobs in the list according to the used algorithm
+    public abstract void dequeue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
 
 }
