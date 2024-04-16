@@ -35,6 +35,9 @@ public class Job {
         this.status = WAITING;
     }
 
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
     public void setStartTime(int startTime) {
         this.startTime = startTime;
     }

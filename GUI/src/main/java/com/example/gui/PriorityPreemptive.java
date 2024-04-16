@@ -2,9 +2,9 @@ package com.example.gui;
 
 import java.util.List;
 
-public class SJF_Preemptive extends Scheduler {
+public class PriorityPreemptive extends Scheduler {
 
-    public SJF_Preemptive(List<Job> jobs) {
+    public PriorityPreemptive(List<Job> jobs) {
         super(jobs);
     }
 
@@ -17,25 +17,26 @@ public class SJF_Preemptive extends Scheduler {
             if (j.getStatus() == Job.RUNNING) j.setStatus(Job.WAITING);
         }
 
-        // Find shortest job
-        Job shortestJob = jobs.get(0);
+        // Find next job
+        Job highestPriorityJob = jobs.get(0);
         for (Job j: jobs) {
             if (j.getStatus() == Job.TERMINATED) continue;
-            if (j.getRemainingTime() < shortestJob.getRemainingTime()) {
-                shortestJob = j;
-                shortestJob.setStatus(Job.RUNNING);
+            if (j.getPriorityLevel() < highestPriorityJob.getPriorityLevel()) {
+                highestPriorityJob = j;
+                highestPriorityJob.setStatus(Job.RUNNING);
             }
         }
         // set start time
-        if (shortestJob.getRemainingTime() == shortestJob.getBurstTime())
-            shortestJob.setStartTime(getCurrentTime());
+        if (highestPriorityJob.getRemainingTime() == highestPriorityJob.getBurstTime())
+            highestPriorityJob.setStartTime(getCurrentTime());
+
         // set remaining time
-        shortestJob.setRemainingTime(shortestJob.getRemainingTime() - 1);
-        if (shortestJob.getRemainingTime() == 0) {
-            dequeue(shortestJob);
+        highestPriorityJob.setRemainingTime(highestPriorityJob.getRemainingTime() - 1);
+        if (highestPriorityJob.getRemainingTime() == 0) {
+            dequeue(highestPriorityJob);
         }
 
-        return shortestJob;
+        return highestPriorityJob;
     }
 
     @Override
