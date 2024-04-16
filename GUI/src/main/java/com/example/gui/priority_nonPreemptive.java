@@ -30,10 +30,13 @@ public class priority_nonPreemptive extends Scheduler{
     }
 
     public void enqueue(Job job){
+        job.setArrivalTime(getCurrentTime());
         jobs.add(job);
     }
     public void dequeue(Job job){
         job.setFinishTime(getCurrentTime());
+        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
+        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
         job.setStatus(Job.TERMINATED);
     }
     private Job checkForRunningJob(){
@@ -44,7 +47,7 @@ public class priority_nonPreemptive extends Scheduler{
         }
         return null;
     }
-    private Job nextJob(){
+    private Job nextJob(){             // selects job with the highest priority
 
         Job highestPriority = jobs.get(0);
         for (int i = 1; i < jobs.size(); i++) {
