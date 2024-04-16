@@ -19,9 +19,9 @@ public class Job {
     private int waitingTime;
     private int turnaroundTime;
     private int status;
-    public final int WAITING = 0;
-    public final int RUNNING = 1;
-    public final int TERMINATED = 2;
+    public static final int WAITING = 0;
+    public static final int RUNNING = 1;
+    public static final int TERMINATED = 2;
     public Job(String name, int arrivalTime, int burstTime, int priorityLevel) {
         this.name = name;
         this.arrivalTime = arrivalTime;
