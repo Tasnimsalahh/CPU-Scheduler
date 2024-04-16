@@ -67,8 +67,8 @@ public abstract class Scheduler {
 
     public abstract Job startScheduler(); //main schdeuling algorithm
 
-    public abstract void enqueue(); // might be used to enqueue jobs in the list according to the used algorithm
+    public abstract void enqueue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
 
-    public abstract void dequeue(); // might be used to enqueue jobs in the list according to the used algorithm
+    public abstract void dequeue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
 
 }
