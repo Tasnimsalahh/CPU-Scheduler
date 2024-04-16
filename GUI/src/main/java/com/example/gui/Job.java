@@ -18,6 +18,10 @@ public class Job {
     private int remainingTime;
     private int waitingTime;
     private int turnaroundTime;
+    private int status;
+    public final int WAITING = 0;
+    public final int RUNNING = 1;
+    public final int TERMINATED = 2;
     public Job(String name, int arrivalTime, int burstTime, int priorityLevel) {
         this.name = name;
         this.arrivalTime = arrivalTime;
@@ -92,7 +96,12 @@ public class Job {
     public int getTurnAroundTime() {
         return turnaroundTime;
     }
-    
-    
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    public int getStatus() {
+        return this.status;
+    }
  
 }
