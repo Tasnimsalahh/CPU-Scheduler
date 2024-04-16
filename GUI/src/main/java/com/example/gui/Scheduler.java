@@ -67,7 +67,12 @@ public abstract class Scheduler {
         return currentTime;
     }
 
-    public abstract Job startScheduler(); //main schdeuling algorithm
+    protected abstract Job startScheduler(); // scheduler implementation here
+
+    public Job schedule() { // called by the GUI
+        schedulerStepCounter++;
+        return startScheduler();
+    }
 
     public abstract void enqueue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
 
