@@ -39,12 +39,20 @@ public class HelloController implements Initializable {
     void onNext(MouseEvent event) throws IOException {
            String num=NoProcesses.getText();
            System.out.print(num);
+        if (scheduler.equals("FCFS")) {
+            Stage stage = (Stage) onNext.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample2.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 700, 700);
+            stage.setTitle("Stage 3");
+            stage.setScene(scene);
+        } else {
+            Stage stage = (Stage) onNext.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample1.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 700, 700);
+            stage.setTitle("Stage 2");
+            stage.setScene(scene);
+        }
 
-           Stage stage = (Stage) onNext.getScene().getWindow();
-           FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample1.fxml"));
-           Scene scene = new Scene(fxmlLoader.load(), 700, 700);
-           stage.setTitle("Stage 2");
-           stage.setScene(scene);
     }
 
 
