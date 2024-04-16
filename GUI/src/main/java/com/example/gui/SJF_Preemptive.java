@@ -28,7 +28,7 @@ public class SJF_Preemptive extends Scheduler {
         }
         // set start time
         if (shortestJob.getRemainingTime() == shortestJob.getBurstTime())
-            shortestJob.setStartTime(schedulerStepCounter);
+            shortestJob.setStartTime(getSchedulerStepCounter());
 
         shortestJob.setRemainingTime(shortestJob.getRemainingTime() - 1);
         if (shortestJob.getRemainingTime() == 0) {
@@ -45,7 +45,7 @@ public class SJF_Preemptive extends Scheduler {
 
     @Override
     public void dequeue(Job job) {
-        job.setFinishTime(schedulerStepCounter);
+        job.setFinishTime(getSchedulerStepCounter());
         job.setStatus(Job.TERMINATED);
     }
 }
