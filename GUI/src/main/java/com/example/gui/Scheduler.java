@@ -16,7 +16,7 @@ public abstract class Scheduler {
     protected int currentTime;
     protected int avgWaititngTime;
     protected int avgTurnaroundTime;
-    protected int schedulerStepCounter; // Counts how many times the startScheduler method was called
+    private int schedulerStepCounter; // Counts how many times the startScheduler method was called
 
     public Scheduler(List<Job> jobs) {
         this.jobs = jobs;
@@ -66,6 +66,8 @@ public abstract class Scheduler {
     public int getCurrentTime() {
         return currentTime;
     }
+
+    public int getSchedulerStepCounter(){return schedulerStepCounter;}
 
     protected abstract Job startScheduler(); // scheduler implementation here
 
