@@ -13,17 +13,16 @@ import java.util.List;
 public abstract class Scheduler {
 
     protected List<Job> jobs;
-    protected int currentTime;
+    private int currentTime;
     protected int avgWaititngTime;
     protected int avgTurnaroundTime;
-    private int schedulerStepCounter; // Counts how many times the startScheduler method was called
 
     public Scheduler(List<Job> jobs) {
         this.jobs = jobs;
         this.currentTime = 0;
         this.avgTurnaroundTime = 0;
         this.avgWaititngTime = 0;
-        this.schedulerStepCounter = 0;
+
     }
 
     public int calculateAvgWaitingTime() {
@@ -43,9 +42,6 @@ public abstract class Scheduler {
 
     }
 
-    public void setCurrentTime(int currentTime) {
-        this.currentTime = currentTime;
-    }
 
     public void setAvgWaititngTime(int avgWaititngTime) {
         this.avgWaititngTime = avgWaititngTime;
@@ -67,12 +63,11 @@ public abstract class Scheduler {
         return currentTime;
     }
 
-    public int getSchedulerStepCounter(){return schedulerStepCounter;}
 
     protected abstract Job startScheduler(); // scheduler implementation here
 
-    public Job schedule() { // called by the GUI
-        schedulerStepCounter++;
+    public Job schedule() {
+        currentTime++;
         return startScheduler();
     }
 
