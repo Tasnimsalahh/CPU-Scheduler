@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="a" prefHeight="543.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller1">
+   <children>
+      <Text layoutX="61.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
+      <Text layoutX="248.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
+      <Text layoutX="50.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Label fx:id="algorithmType" layoutX="204.0" layoutY="89.0" prefHeight="18.0" prefWidth="140.0" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="waitingField" layoutX="93.0" layoutY="382.0" text="Label" />
+      <Label fx:id="turnaroundField" layoutX="287.0" layoutY="373.0" text="Label" />
+   </children>
+</AnchorPane>
