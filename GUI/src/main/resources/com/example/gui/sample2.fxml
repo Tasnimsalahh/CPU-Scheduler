@@ -8,25 +8,29 @@
     <children>
         <Text layoutX="29.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
         <Text layoutX="29.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
-        <Text layoutX="29.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm">
+        <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm">
             <font>
                 <Font name="System Bold" size="19.0" />
             </font>
         </Text>
-        <Label fx:id="algorithmType" layoutX="152.0" layoutY="43.0" prefHeight="22.0" prefWidth="84.0" style="-fx-background-color: yellow;">
+        <Label fx:id="algorithmType" layoutX="152.0" layoutY="27.0" prefHeight="22.0" prefWidth="84.0" style="-fx-background-color: yellow;">
             <font>
                 <Font size="15.0" />
             </font>
         </Label>
         <Label fx:id="waitingField" ellipsisString="" layoutX="190.0" layoutY="301.0" lineSpacing="5.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: lightblue;" />
         <Label fx:id="turnaroundField" layoutX="190.0" layoutY="340.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: lightblue;" />
-        <Text layoutX="281.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Processes" />
-        <Text layoutX="389.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining burst time" />
-        <Text layoutX="535.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting time" />
         <Text layoutX="29.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gantt chart">
             <font>
                 <Font name="System Bold Italic" size="19.0" />
             </font>
         </Text>
+        <TableView layoutX="283.0" layoutY="25.0" prefHeight="388.0" prefWidth="312.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Processes" />
+                <TableColumn prefWidth="138.39990234375" text="Remaining burst time" />
+                <TableColumn prefWidth="97.59988403320312" text="Waiting time" />
+            </columns>
+        </TableView>
     </children>
 </AnchorPane>
