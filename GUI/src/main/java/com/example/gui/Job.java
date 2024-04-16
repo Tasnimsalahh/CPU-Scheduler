@@ -23,17 +23,16 @@ public class Job {
     public static final int RUNNING = 1;
     public static final int TERMINATED = 2;
     public Job(String name, int arrivalTime, int burstTime, int priorityLevel) {
-        this.name = name;
-        this.arrivalTime = arrivalTime;
-        this.burstTime = burstTime;
+        this(name,arrivalTime,burstTime);
         this.priorityLevel = priorityLevel;
-        this.remainingTime = this.burstTime;
     }
 
     public Job(String name, int arrivalTime, int burstTime) {
         this.name = name;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
+        this.remainingTime = this.burstTime;
+        this.status = WAITING;
     }
 
     public void setStartTime(int startTime) {
