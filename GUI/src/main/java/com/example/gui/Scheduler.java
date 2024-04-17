@@ -67,8 +67,9 @@ public abstract class Scheduler {
     protected abstract Job startScheduler(); // scheduler implementation here
 
     public Job schedule() {
+        Job j = startScheduler();
         currentTime++;
-        return startScheduler();
+        return j;
     }
 
     public abstract void enqueue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
