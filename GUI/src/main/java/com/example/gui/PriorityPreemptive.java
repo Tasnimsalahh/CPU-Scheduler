@@ -20,12 +20,14 @@ public class PriorityPreemptive extends Scheduler {
         // Find next job
         Job highestPriorityJob = jobs.get(0);
         for (Job j: jobs) {
-            if (j.getStatus() == Job.TERMINATED) continue;
-            if (j.getPriorityLevel() < highestPriorityJob.getPriorityLevel()) {
+            if (notAvailToRun(j)) continue;
+            if (j.getPriorityLevel() < highestPriorityJob.getPriorityLevel() || notAvailToRun(highestPriorityJob)) { // elimnate terminated jobs from the comparison
                 highestPriorityJob = j;
                 highestPriorityJob.setStatus(Job.RUNNING);
             }
         }
+        // check if no jobs are ready
+        if (notAvailToRun(highestPriorityJob)) return null;
         // set start time
         if (highestPriorityJob.getRemainingTime() == highestPriorityJob.getBurstTime())
             highestPriorityJob.setStartTime(getCurrentTime());
@@ -37,19 +39,5 @@ public class PriorityPreemptive extends Scheduler {
         }
 
         return highestPriorityJob;
-    }
-
-    @Override
-    public void enqueue(Job job) {
-        job.setArrivalTime(getCurrentTime());
-        jobs.add(job);
-    }
-
-    @Override
-    public void dequeue(Job job) {
-        job.setFinishTime(getCurrentTime());
-        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
-        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
-        job.setStatus(Job.TERMINATED);
     }
 }

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="a" prefHeight="543.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller1">
+<AnchorPane fx:id="anchor" prefHeight="543.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller1">
    <children>
       <Text layoutX="29.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
       <Text layoutX="29.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
@@ -21,20 +18,27 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="waitingField" ellipsisString="" layoutX="190.0" layoutY="301.0" lineSpacing="5.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: lightblue;" />
-      <Label fx:id="turnaroundField" layoutX="190.0" layoutY="340.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: lightblue;" />
       <Text layoutX="29.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gantt chart">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
       </Text>
-      <TableView layoutX="283.0" layoutY="25.0" prefHeight="388.0" prefWidth="400.0">
+      <TableView fx:id="Table" layoutX="283.0" layoutY="25.0" onMouseClicked="#addProcess" prefHeight="388.0" prefWidth="400.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Processes" />
-          <TableColumn prefWidth="138.39990234375" text="Remaining burst time" />
-            <TableColumn prefWidth="97.59988403320312" text="Waiting time" />
-            <TableColumn prefWidth="97.59988403320312" text="Priority" />
+          <TableColumn fx:id="name_table" prefWidth="75.0" text="Processes" />
+          <TableColumn fx:id="burst_table" prefWidth="138.39990234375" text="Remaining burst time" />
+            <TableColumn fx:id="waiting_table" prefWidth="97.59988403320312" text="Waiting time" />
+            <TableColumn fx:id="priority_table" prefWidth="97.59988403320312" text="Priority" />
         </columns>
       </TableView>
+      <Text layoutX="39.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add process name" />
+      <Text layoutX="39.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add burst time" />
+      <Text layoutX="176.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="71.4000244140625" />
+      <Text layoutX="176.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="71.4000244140625" />
+      <Text layoutX="40.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add priority" />
+      <Button fx:id="addprocess" layoutX="193.0" layoutY="193.0" mnemonicParsing="false" onAction="#addProcess" text="Add" />
+      <TextField fx:id="processname" layoutX="166.0" layoutY="94.0" prefHeight="26.0" prefWidth="91.0" />
+      <TextField fx:id="bursttime" layoutX="166.0" layoutY="126.0" prefHeight="26.0" prefWidth="91.0" />
+      <TextField fx:id="priority" layoutX="166.0" layoutY="161.0" prefHeight="26.0" prefWidth="91.0" />
    </children>
 </AnchorPane>
