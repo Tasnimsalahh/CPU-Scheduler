@@ -22,7 +22,9 @@ public abstract class Scheduler {
         this.currentTime = 0;
         this.avgTurnaroundTime = 0;
         this.avgWaititngTime = 0;
-
+        for (Job j: jobs) {
+            j.setArrivalTime(0);
+        }
     }
 
     public int calculateAvgWaitingTime() {
