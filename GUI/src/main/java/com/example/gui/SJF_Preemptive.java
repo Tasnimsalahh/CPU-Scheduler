@@ -17,17 +17,17 @@ public class SJF_Preemptive extends Scheduler {
             if (j.getStatus() == Job.RUNNING) j.setStatus(Job.WAITING);
         }
 
-        // Find shortest job
+        // Find the shortest job
         Job shortestJob = jobs.get(0);
         for (Job j: jobs) {
-            if (j.getStatus() == Job.TERMINATED) continue;
+            if (j.getStatus() == Job.TERMINATED || j.getArrivalTime() > getCurrentTime()) continue;
             if (j.getRemainingTime() < shortestJob.getRemainingTime()) {
                 shortestJob = j;
                 shortestJob.setStatus(Job.RUNNING);
             }
         }
-        // check if all jobs are terminated
-        if (shortestJob.getStatus() == Job.TERMINATED) return null;
+        // check if no jobs are ready
+        if (shortestJob.getStatus() == Job.TERMINATED || shortestJob.getArrivalTime() > getCurrentTime()) return null;
         // set start time
         if (shortestJob.getRemainingTime() == shortestJob.getBurstTime())
             shortestJob.setStartTime(getCurrentTime());

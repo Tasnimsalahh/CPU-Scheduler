@@ -20,14 +20,14 @@ public class PriorityPreemptive extends Scheduler {
         // Find next job
         Job highestPriorityJob = jobs.get(0);
         for (Job j: jobs) {
-            if (j.getStatus() == Job.TERMINATED) continue;
+            if (j.getStatus() == Job.TERMINATED || j.getArrivalTime() > getCurrentTime()) continue;
             if (j.getPriorityLevel() < highestPriorityJob.getPriorityLevel()) {
                 highestPriorityJob = j;
                 highestPriorityJob.setStatus(Job.RUNNING);
             }
         }
-        // check if all jobs are terminated
-        if (highestPriorityJob.getStatus() == Job.TERMINATED) return null;
+        // check if no jobs are ready
+        if (highestPriorityJob.getStatus() == Job.TERMINATED || highestPriorityJob.getArrivalTime() > getCurrentTime()) return null;
         // set start time
         if (highestPriorityJob.getRemainingTime() == highestPriorityJob.getBurstTime())
             highestPriorityJob.setStartTime(getCurrentTime());
