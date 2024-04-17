@@ -65,7 +65,7 @@ public class Job {
 
     public int getArrivalTime() {
         return arrivalTime;
-        
+
     }
 
     public int getBurstTime() {
@@ -102,5 +102,5 @@ public class Job {
     public int getStatus() {
         return this.status;
     }
- 
+
 }
