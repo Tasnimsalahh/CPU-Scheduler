@@ -47,7 +47,7 @@ public class SJF_nonPreemptive extends Scheduler{
         for (int i = 1; i < jobs.size(); i++) {
             Job currentJob = jobs.get(i);
             if (notAvailToRun(currentJob)) continue;
-            if (currentJob.getBurstTime() < shortestJob.getBurstTime() || notAvailToRun(shortestJob)) {
+            if (currentJob.getRemainingTime() < shortestJob.getRemainingTime() || notAvailToRun(shortestJob)) {
                 shortestJob = currentJob;
             }
         }

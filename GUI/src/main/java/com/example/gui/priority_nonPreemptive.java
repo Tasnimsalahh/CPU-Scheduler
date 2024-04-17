@@ -44,7 +44,7 @@ public class priority_nonPreemptive extends Scheduler{
         for (int i = 1; i < jobs.size(); i++) {
             Job currentJob = jobs.get(i);
             if (notAvailToRun(currentJob)) continue;
-            if (currentJob.getPriorityLevel() < highestPriorityJob.getBurstTime() || notAvailToRun(highestPriorityJob)) {
+            if (currentJob.getPriorityLevel() < highestPriorityJob.getPriorityLevel() || notAvailToRun(highestPriorityJob)) {
                 highestPriorityJob = currentJob;
             }
         }
