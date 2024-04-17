@@ -1,18 +1,17 @@
 package com.example.gui;
 
 import java.util.List;
-public class SJF_nonPreemptive extends Scheduler{
-
-    public SJF_nonPreemptive(List<Job> jobs){
+public class priority_nonPreemptive extends Scheduler{
+    public priority_nonPreemptive(List<Job> jobs) {
         super(jobs);
     }
 
-    protected Job startScheduler(){
+    @Override
+    protected Job startScheduler() {
         if(jobs.isEmpty()){return null;}
         for (Job j: jobs) {
             if (j.getStatus() == Job.RUNNING) j.setStatus(Job.WAITING);  // setting all non-terminated jobs to waiting
         }
-
         Job currentJob = checkForRunningJob();
         if (currentJob != null){                      // non-preemptive property
             currentJob.setStatus(Job.RUNNING);
@@ -20,15 +19,13 @@ public class SJF_nonPreemptive extends Scheduler{
             if(currentJob.getRemainingTime() == 0) dequeue(currentJob);
             return currentJob;
         }
-
         else {
-            Job shortestjob = nextJob();
-            shortestjob.setStartTime(getCurrentTime());
-            shortestjob.setStatus(Job.RUNNING);
-            shortestjob.setRemainingTime(shortestjob.getRemainingTime()-1);
-            if (shortestjob.getRemainingTime() == 0) dequeue(shortestjob);
-
-            return shortestjob;
+            Job highestPriority = nextJob();
+            highestPriority.setStartTime(getCurrentTime());
+            highestPriority.setStatus(Job.RUNNING);
+            highestPriority.setRemainingTime(highestPriority.getRemainingTime()-1);
+            if (highestPriority.getRemainingTime()==0) dequeue(highestPriority);
+            return highestPriority;
         }
     }
 
@@ -42,7 +39,6 @@ public class SJF_nonPreemptive extends Scheduler{
         job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
         job.setStatus(Job.TERMINATED);
     }
-
     private Job checkForRunningJob(){
         for (Job j: jobs) {
             if (j.getBurstTime() != j.getRemainingTime()){
@@ -51,17 +47,16 @@ public class SJF_nonPreemptive extends Scheduler{
         }
         return null;
     }
-    private Job nextJob(){
+    private Job nextJob(){             // selects job with the highest priority
 
-        Job shortestJob = jobs.get(0);
+        Job highestPriority = jobs.get(0);
         for (int i = 1; i < jobs.size(); i++) {
             Job currentJob = jobs.get(i);
             if (currentJob.getStatus() == Job.TERMINATED) continue;
-            else if (currentJob.getBurstTime() < shortestJob.getBurstTime()) {
-                shortestJob = currentJob;
+            else if (currentJob.getPriorityLevel() < highestPriority.getBurstTime()) {
+                highestPriority = currentJob;
             }
         }
-        return shortestJob;
+        return highestPriority;
     }
-
 }
