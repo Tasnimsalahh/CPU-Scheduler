@@ -26,6 +26,8 @@ public class SJF_Preemptive extends Scheduler {
                 shortestJob.setStatus(Job.RUNNING);
             }
         }
+        // check if all jobs are terminated
+        if (shortestJob.getStatus() == Job.TERMINATED) return null;
         // set start time
         if (shortestJob.getRemainingTime() == shortestJob.getBurstTime())
             shortestJob.setStartTime(getCurrentTime());
