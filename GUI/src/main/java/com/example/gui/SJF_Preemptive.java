@@ -20,14 +20,14 @@ public class SJF_Preemptive extends Scheduler {
         // Find the shortest job
         Job shortestJob = jobs.get(0);
         for (Job j: jobs) {
-            if (j.getStatus() == Job.TERMINATED || j.getArrivalTime() > getCurrentTime()) continue;
-            if (j.getRemainingTime() < shortestJob.getRemainingTime() || shortestJob.getStatus() == Job.TERMINATED) { // eliminate terminated jobs from the comparison
+            if (notAvailToRun(j)) continue;
+            if (j.getRemainingTime() < shortestJob.getRemainingTime() || notAvailToRun(shortestJob)) { // eliminate terminated jobs from the comparison
                 shortestJob = j;
                 shortestJob.setStatus(Job.RUNNING);
             }
         }
         // check if no jobs are ready
-        if (shortestJob.getStatus() == Job.TERMINATED || shortestJob.getArrivalTime() > getCurrentTime()) return null;
+        if (notAvailToRun(shortestJob)) return null;
         // set start time
         if (shortestJob.getRemainingTime() == shortestJob.getBurstTime())
             shortestJob.setStartTime(getCurrentTime());
@@ -38,19 +38,5 @@ public class SJF_Preemptive extends Scheduler {
         }
 
         return shortestJob;
-    }
-
-    @Override
-    public void enqueue(Job job) {
-        job.setArrivalTime(getCurrentTime());
-        jobs.add(job);
-    }
-
-    @Override
-    public void dequeue(Job job) {
-        job.setFinishTime(getCurrentTime());
-        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
-        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
-        job.setStatus(Job.TERMINATED);
     }
 }

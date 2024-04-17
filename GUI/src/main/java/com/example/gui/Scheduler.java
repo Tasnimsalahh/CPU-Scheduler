@@ -72,8 +72,20 @@ public abstract class Scheduler {
         return j;
     }
 
-    public abstract void enqueue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
-
-    public abstract void dequeue(Job job); // might be used to enqueue jobs in the list according to the used algorithm
-
+    public final void enqueue(Job job) { // might be used to enqueue jobs in the list according to the used algorithm
+        job.setArrivalTime(getCurrentTime());
+        jobs.add(job);
+    }
+    public final void dequeue(Job job) { // might be used to enqueue jobs in the list according to the used algorithm
+        job.setFinishTime(getCurrentTime() + 1);
+        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
+        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
+        job.setStatus(Job.TERMINATED);
+    }
+    public boolean availToRun(Job job) {
+        return job.getStatus() != Job.TERMINATED && job.getArrivalTime() <= currentTime;
+    }
+    public boolean notAvailToRun(Job job) {
+        return !availToRun(job);
+    }
 }

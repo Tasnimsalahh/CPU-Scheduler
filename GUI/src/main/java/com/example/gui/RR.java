@@ -97,22 +97,4 @@ public class RR extends Scheduler {
 		
 		return selectedJob;	
 	}
-
-	@Override
-	public void enqueue(Job job) {
-		job.setArrivalTime(getCurrentTime());
-		jobs.add(job);
-	}
-
-	@Override
-	public void dequeue(Job job) {
-		job.setFinishTime(getCurrentTime());
-		job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
-		job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
-		job.setStatus(Job.TERMINATED);
-	}
-
-
-
-
 }

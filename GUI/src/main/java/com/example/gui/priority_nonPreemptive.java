@@ -21,6 +21,7 @@ public class priority_nonPreemptive extends Scheduler{
         }
         else {
             Job highestPriority = nextJob();
+            if (highestPriority == null) return null;
             highestPriority.setStartTime(getCurrentTime());
             highestPriority.setStatus(Job.RUNNING);
             highestPriority.setRemainingTime(highestPriority.getRemainingTime()-1);
@@ -29,19 +30,9 @@ public class priority_nonPreemptive extends Scheduler{
         }
     }
 
-    public void enqueue(Job job){
-        job.setArrivalTime(getCurrentTime());
-        jobs.add(job);
-    }
-    public void dequeue(Job job){
-        job.setFinishTime(getCurrentTime());
-        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
-        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
-        job.setStatus(Job.TERMINATED);
-    }
     private Job checkForRunningJob(){
         for (Job j: jobs) {
-            if (j.getBurstTime() != j.getRemainingTime()){
+            if (j.getBurstTime() != j.getRemainingTime() && availToRun(j)){
                 return j;
             }
         }
@@ -49,14 +40,15 @@ public class priority_nonPreemptive extends Scheduler{
     }
     private Job nextJob(){             // selects job with the highest priority
 
-        Job highestPriority = jobs.get(0);
+        Job highestPriorityJob = jobs.get(0);
         for (int i = 1; i < jobs.size(); i++) {
             Job currentJob = jobs.get(i);
-            if (currentJob.getStatus() == Job.TERMINATED) continue;
-            else if (currentJob.getPriorityLevel() < highestPriority.getBurstTime()) {
-                highestPriority = currentJob;
+            if (notAvailToRun(currentJob)) continue;
+            if (currentJob.getPriorityLevel() < highestPriorityJob.getBurstTime() || notAvailToRun(highestPriorityJob)) {
+                highestPriorityJob = currentJob;
             }
         }
-        return highestPriority;
+        if (availToRun(highestPriorityJob)) return highestPriorityJob;
+        else return null;
     }
 }

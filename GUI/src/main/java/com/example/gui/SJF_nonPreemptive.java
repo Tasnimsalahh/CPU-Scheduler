@@ -23,6 +23,7 @@ public class SJF_nonPreemptive extends Scheduler{
 
         else {
             Job shortestjob = nextJob();
+            if (shortestjob == null) return null;
             shortestjob.setStartTime(getCurrentTime());
             shortestjob.setStatus(Job.RUNNING);
             shortestjob.setRemainingTime(shortestjob.getRemainingTime()-1);
@@ -32,20 +33,9 @@ public class SJF_nonPreemptive extends Scheduler{
         }
     }
 
-    public void enqueue(Job job){
-        job.setArrivalTime(getCurrentTime());
-        jobs.add(job);
-    }
-    public void dequeue(Job job){
-        job.setFinishTime(getCurrentTime());
-        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
-        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
-        job.setStatus(Job.TERMINATED);
-    }
-
     private Job checkForRunningJob(){
         for (Job j: jobs) {
-            if (j.getBurstTime() != j.getRemainingTime()){
+            if (j.getBurstTime() != j.getRemainingTime() && availToRun(j)){
                 return j;
             }
         }
@@ -56,12 +46,13 @@ public class SJF_nonPreemptive extends Scheduler{
         Job shortestJob = jobs.get(0);
         for (int i = 1; i < jobs.size(); i++) {
             Job currentJob = jobs.get(i);
-            if (currentJob.getStatus() == Job.TERMINATED) continue;
-            else if (currentJob.getBurstTime() < shortestJob.getBurstTime()) {
+            if (notAvailToRun(currentJob)) continue;
+            if (currentJob.getBurstTime() < shortestJob.getBurstTime() || notAvailToRun(shortestJob)) {
                 shortestJob = currentJob;
             }
         }
-        return shortestJob;
+        if (availToRun(shortestJob)) return shortestJob;
+        else return null;
     }
 
 }
