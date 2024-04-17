@@ -21,7 +21,7 @@ public class SJF_Preemptive extends Scheduler {
         Job shortestJob = jobs.get(0);
         for (Job j: jobs) {
             if (j.getStatus() == Job.TERMINATED || j.getArrivalTime() > getCurrentTime()) continue;
-            if (j.getRemainingTime() < shortestJob.getRemainingTime()) {
+            if (j.getRemainingTime() < shortestJob.getRemainingTime() || shortestJob.getStatus() == Job.TERMINATED) { // eliminate terminated jobs from the comparison
                 shortestJob = j;
                 shortestJob.setStatus(Job.RUNNING);
             }
