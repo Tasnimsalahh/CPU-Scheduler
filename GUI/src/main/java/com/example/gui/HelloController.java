@@ -58,7 +58,14 @@ public class HelloController implements Initializable {
             stage.setTitle("Stage 3");
             stage.setScene(scene);
 
-        } else {
+        }else if(scheduler.equals("RR")){
+            Stage stage = (Stage) onNext.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("RR.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 700, 700);
+            stage.setTitle("Stage 4");
+            stage.setScene(scene);
+        }
+        else {
             Stage stage = (Stage) onNext.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample1.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 700, 700);
@@ -69,7 +76,7 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        schedulers.getItems().addAll("FCFS", "SJF", "RR", "PS");
+        schedulers.getItems().addAll("FCFS", "SJF Preemptive (SRTF)","SJF Non Preemptive", "RR", "PS Preemptive","PS Non Preemptive");
         schedulers.setOnAction(this::getScheduler);
     }
 }
