@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchor" prefHeight="543.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller1">
+<AnchorPane fx:id="anchor" prefHeight="625.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller1">
    <children>
       <Text layoutX="29.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
       <Text layoutX="29.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
@@ -18,12 +18,12 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Text layoutX="29.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gantt chart">
+      <Text layoutX="29.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gantt chart">
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
       </Text>
-      <TableView fx:id="Table" layoutX="283.0" layoutY="25.0" onMouseClicked="#addProcess" prefHeight="388.0" prefWidth="400.0">
+      <TableView fx:id="Table" layoutX="420.0" layoutY="25.0" prefHeight="420.0" prefWidth="400.0">
         <columns>
           <TableColumn fx:id="name_table" prefWidth="75.0" text="Processes" />
           <TableColumn fx:id="burst_table" prefWidth="138.39990234375" text="Remaining burst time" />
@@ -40,5 +40,10 @@
       <TextField fx:id="processname" layoutX="166.0" layoutY="94.0" prefHeight="26.0" prefWidth="91.0" />
       <TextField fx:id="bursttime" layoutX="166.0" layoutY="126.0" prefHeight="26.0" prefWidth="91.0" />
       <TextField fx:id="priority" layoutX="166.0" layoutY="161.0" prefHeight="26.0" prefWidth="91.0" />
+      <TableView fx:id="Table_processes" layoutX="290.0" layoutY="24.0" onMouseClicked="#addProcess" prefHeight="420.0" prefWidth="102.0" style="-fx-background-color: lightgray;">
+        <columns>
+          <TableColumn fx:id="ProcessesAdded" prefWidth="99.20002746582031" text="Processes added" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

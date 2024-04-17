@@ -1,6 +1,5 @@
 package com.example.gui;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +13,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller1 implements Initializable {
+    @FXML
+    private TableColumn<Job, String> ProcessesAdded;
 
+    @FXML
+    private TableView<Job> Table_processes;
     @FXML
     private Label algorithmType;
     @FXML
@@ -67,7 +70,7 @@ public class Controller1 implements Initializable {
                 Job newJob = new Job(name, arrivalTime, burstTime, priorityLevel);
 
                 jobList.add(newJob);
-                /*System.out.print(newJob.getName());
+                /* System.out.print(newJob.getName());
                 System.out.print(newJob.getArrivalTime());
                 System.out.print(newJob.getPriorityLevel());
                 System.out.print(newJob.getWaitingTime());
@@ -81,13 +84,15 @@ public class Controller1 implements Initializable {
     }
     public void updateTable()
     {
-        algorithmType.setText(HelloController.scheduler);
-        name_table.setCellValueFactory(new PropertyValueFactory<Job,String>("name"));
-        burst_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("burstTime"));
-        waiting_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("waiting"));
-        priority_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("priorityLevel"));
+        //algorithmType.setText(HelloController.scheduler);
+        ProcessesAdded.setCellValueFactory(new PropertyValueFactory<Job,String>("name"));
+        //burst_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("burstTime"));
+        //waiting_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("waiting"));
+        //priority_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("priorityLevel"));
 
-        Table.setItems(jobList);
+        Table_processes.setItems(jobList);
     }
+
+
 
 }

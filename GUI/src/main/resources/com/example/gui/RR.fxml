@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchor" prefHeight="625.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller2">
+<AnchorPane fx:id="anchor" prefHeight="625.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui.Controller3_RR">
     <children>
         <Text layoutX="29.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average waiting time" />
         <Text layoutX="29.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average turnaround time" />
@@ -23,7 +23,7 @@
                 <Font name="System Bold Italic" size="19.0" />
             </font>
         </Text>
-        <TableView fx:id="Table" layoutX="420.0" layoutY="25.0" onMouseClicked="#addProcess2" prefHeight="420.0" prefWidth="314.0">
+        <TableView fx:id="Table" layoutX="420.0" layoutY="25.0" prefHeight="420.0" prefWidth="311.0">
             <columns>
                 <TableColumn fx:id="name_table" prefWidth="75.0" text="Processes" />
                 <TableColumn fx:id="burst_table" prefWidth="138.39990234375" text="Remaining burst time" />
@@ -34,13 +34,16 @@
         <Text layoutX="39.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add burst time" />
         <Text layoutX="176.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="71.4000244140625" />
         <Text layoutX="176.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="71.4000244140625" />
-        <Button fx:id="addprocess2" layoutX="193.0" layoutY="193.0" mnemonicParsing="false" onAction="#addProcess2" text="Add" />
+        <Text layoutX="38.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add time quantum" />
+        <Button fx:id="addprocess" layoutX="192.0" layoutY="175.0" mnemonicParsing="false" onAction="#addProcess" text="Add" />
         <TextField fx:id="processname" layoutX="166.0" layoutY="94.0" prefHeight="26.0" prefWidth="91.0" />
         <TextField fx:id="bursttime" layoutX="166.0" layoutY="126.0" prefHeight="26.0" prefWidth="91.0" />
-        <TableView fx:id="Table_processes" layoutX="290.0" layoutY="24.0" prefHeight="420.0" prefWidth="102.0" style="-fx-background-color: lightgray;">
+        <TextField fx:id="TimeQuantum" layoutX="166.0" layoutY="221.0" prefHeight="26.0" prefWidth="91.0" />
+        <TableView fx:id="Table_processes" layoutX="290.0" layoutY="24.0" onMouseClicked="#addProcess" prefHeight="420.0" prefWidth="102.0" style="-fx-background-color: lightgray;">
             <columns>
                 <TableColumn fx:id="ProcessesAdded" prefWidth="99.20002746582031" text="Processes added" />
             </columns>
         </TableView>
+      <Button fx:id="addQuantum" layoutX="192.0" layoutY="264.0" mnemonicParsing="false" onAction="#addQuantum" text="Add" />
     </children>
 </AnchorPane>

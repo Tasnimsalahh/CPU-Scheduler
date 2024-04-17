@@ -13,22 +13,25 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller2 implements Initializable {
+public class Controller3_RR implements Initializable {
     @FXML
     private TableColumn<Job, String> ProcessesAdded;
 
     @FXML
+    private TableView<?> Table;
+
+    @FXML
     private TableView<Job> Table_processes;
 
-    private ObservableList<Job> jobList = FXCollections.observableArrayList();
     @FXML
-    private TableView<Job> Table;
+    private TextField TimeQuantum;
 
     @FXML
-    private Button addprocess2;
+    private Button addprocess;
 
     @FXML
     private Label algorithmType;
@@ -50,16 +53,19 @@ public class Controller2 implements Initializable {
 
     @FXML
     private TableColumn<Job, Integer> waiting_table;
+    private ObservableList<Job> jobList = FXCollections.observableArrayList();
 
-    @FXML
-    void addProcess2(ActionEvent event) {
+    private Scheduler scheduler;
+
+    public void addProcess(ActionEvent actionEvent) {
         String name = processname.getText();
         int arrivalTime = 0; // You need to get this value from the GUI as well
         int burstTime = Integer.parseInt(bursttime.getText());
         // Create a new Job object with the retrieved values
         Job newJob = new Job(name, arrivalTime, burstTime);
 
-        jobList.add(newJob);
+        //jobList.add(newJob);
+        scheduler.enqueue(newJob);
                 /*System.out.print(newJob.getName());
                 System.out.print(newJob.getArrivalTime());
                 System.out.print(newJob.getPriorityLevel());
@@ -68,6 +74,11 @@ public class Controller2 implements Initializable {
         updateTable();
     }
 
+    public void addQuantum(ActionEvent actionEvent) {
+        int Qtime = Integer.parseInt(TimeQuantum.getText());
+        //RR newRR = new RR(jobList,Qtime);
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
@@ -81,5 +92,6 @@ public class Controller2 implements Initializable {
 
         Table_processes.setItems(jobList);
     }
+
 
 }
