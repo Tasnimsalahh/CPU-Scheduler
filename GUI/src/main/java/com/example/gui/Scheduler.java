@@ -14,50 +14,51 @@ public abstract class Scheduler {
 
     protected List<Job> jobs;
     private int currentTime;
-    protected int avgWaititngTime;
-    protected int avgTurnaroundTime;
+    protected float avgWaitingTime;
+    protected float avgTurnaroundTime;
 
     public Scheduler(List<Job> jobs) {
         this.jobs = jobs;
         this.currentTime = 0;
         this.avgTurnaroundTime = 0;
-        this.avgWaititngTime = 0;
+        this.avgWaitingTime = 0;
 
     }
 
-    public int calculateAvgWaitingTime() {
+    public float calculateAvgWaitingTime() {
         for (Job j : jobs) {
-            avgWaititngTime = avgWaititngTime + j.getWaitingTime();
+            avgWaitingTime = avgWaitingTime + j.getWaitingTime();
         }
-        avgWaititngTime = avgWaititngTime / jobs.size();
-        return avgWaititngTime;
+        avgWaitingTime = avgWaitingTime / jobs.size();
+        return avgWaitingTime;
     }
 
-    public int calculateAvgTurnaroundTime() {
+    public float calculateAvgTurnaroundTime() {
         for (Job j : jobs) {
             avgTurnaroundTime = avgTurnaroundTime + j.getTurnAroundTime();
         }
         avgTurnaroundTime = avgTurnaroundTime / jobs.size();
         return avgTurnaroundTime;
-
     }
 
 
-    public void setAvgWaititngTime(int avgWaititngTime) {
-        this.avgWaititngTime = avgWaititngTime;
+    public void setAvgWaitingTime(int avgWaitingTime) {
+        this.avgWaitingTime = avgWaitingTime;
     }
 
     public void setAvgTurnaroundTime(int avgTurnaroundTime) {
         this.avgTurnaroundTime = avgTurnaroundTime;
     }
-
-    public int getAvgWaititngTime() {
-        return avgWaititngTime;
+//  commented to avoid confusion
+/*
+    public float getAvgWaitingTime() {
+        return avgWaitingTime;
     }
 
-    public int getAvgTurnaroundTime() {
+    public float getAvgTurnaroundTime() {
         return avgTurnaroundTime;
     }
+ */
 
     public int getCurrentTime() {
         return currentTime;
@@ -82,10 +83,10 @@ public abstract class Scheduler {
         job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
         job.setStatus(Job.TERMINATED);
     }
-    public boolean availToRun(Job job) {
+    public final boolean availToRun(Job job) {
         return job.getStatus() != Job.TERMINATED && job.getArrivalTime() <= currentTime;
     }
-    public boolean notAvailToRun(Job job) {
+    public final boolean notAvailToRun(Job job) {
         return !availToRun(job);
     }
 }
