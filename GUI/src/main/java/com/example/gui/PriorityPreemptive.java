@@ -26,6 +26,8 @@ public class PriorityPreemptive extends Scheduler {
                 highestPriorityJob.setStatus(Job.RUNNING);
             }
         }
+        // check if all jobs are terminated
+        if (highestPriorityJob.getStatus() == Job.TERMINATED) return null;
         // set start time
         if (highestPriorityJob.getRemainingTime() == highestPriorityJob.getBurstTime())
             highestPriorityJob.setStartTime(getCurrentTime());
