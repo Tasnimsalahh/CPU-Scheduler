@@ -32,20 +32,6 @@ public class FCFS extends Scheduler{
     private void arrangeJobs(){
         Collections.sort(jobs, new ArrangeJobs());
     }
-    
-    @Override
-    public void enqueue(Job job){
-        job.setArrivalTime(getCurrentTime());
-        jobs.add(job);
-    }
-    
-    @Override
-    public void dequeue(Job job){
-        job.setFinishTime(getCurrentTime());
-        job.setTurnAroundTime(job.getFinishTime() - job.getArrivalTime());
-        job.setWaitingTime(job.getFinishTime() - job.getArrivalTime() - job.getBurstTime());
-        job.setStatus(Job.TERMINATED);
-    }
 }
 
 class ArrangeJobs implements java.util.Comparator<Job>{
