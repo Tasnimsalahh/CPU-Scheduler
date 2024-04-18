@@ -9,10 +9,16 @@ public class RR extends Scheduler {
 	private static int entryCount=0;
 	private static List<Job> availableJobs = new ArrayList<Job>();
 
-
+	public RR(List<Job> jobs ) {
+		super(jobs);
+	}
 	public RR(List<Job> jobs , int timeQuantum) {
 		super(jobs);
 		this.quantumCount = timeQuantum;
+	}
+
+	public void setQuantumCount(int quantumCount) {
+		this.quantumCount = quantumCount;
 	}
 
 	@Override

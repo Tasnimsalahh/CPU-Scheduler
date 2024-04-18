@@ -31,6 +31,17 @@ public class Controller3_RR implements Initializable {
 
     @FXML
     private TextField TimeQuantum;
+    @FXML
+    private TextField ArrivalTime;
+
+    @FXML
+    private TableColumn<Job,Integer> Arrival_table;
+
+    @FXML
+    private Label AvgTurnaround;
+
+    @FXML
+    private Label AvgWaiting;
 
     @FXML
     private Button addprocess;
@@ -44,8 +55,6 @@ public class Controller3_RR implements Initializable {
     @FXML
     private TableColumn<Job, Integer> burst_table;
 
-    @FXML
-    private TableColumn<Job, Integer> Arrival_table;
 
     @FXML
     private TextField bursttime;
@@ -58,15 +67,18 @@ public class Controller3_RR implements Initializable {
 
     @FXML
     private TableColumn<Job, Integer> waiting_table;
+    @FXML
+    private Label Timer;
     private ObservableList<Job> jobList = FXCollections.observableArrayList();
     int Qtime;
+    RR scheduler = new RR(jobList);
     public void addQuantum(ActionEvent actionEvent) {
         Qtime = Integer.parseInt(TimeQuantum.getText());
-        //RR newRR = new RR(jobList,Qtime);
+
+        scheduler.setQuantumCount(Qtime);
 
     }
 
-    RR scheduler = new RR(jobList,Qtime);
 
 
 
@@ -74,11 +86,11 @@ public class Controller3_RR implements Initializable {
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
-        int arrivalTime = 0; // You need to get this value from the GUI as well
+        int arrivalTime = Integer.parseInt(ArrivalTime.getText());
         int burstTime = Integer.parseInt(bursttime.getText());
         // Create a new Job object with the retrieved values
-        Job newJob = new Job(name, arrivalTime, burstTime);
-
+        Job newJob = new Job(name, arrivalTime, burstTime); // arrival feh moshkla
+        //newJob.setArrivalTime(arrivalTime);
         //jobList.add(newJob);
 
         scheduler.enqueue(newJob);
@@ -125,7 +137,11 @@ public class Controller3_RR implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
+        algorithmType.setText(HelloController.scheduler);
+        Timer.setText(Integer.toString(scheduler.getCurrentTime())); // doesn't work
     }
+
+
     public void updateTable()
     {
         name_table.setCellValueFactory(new PropertyValueFactory<>("name"));

@@ -44,7 +44,7 @@ public class HelloController implements Initializable {
     void getScheduler(ActionEvent event) {
         scheduler = schedulers.getValue();
         // Controller1.algorithmType.setText(scheduler);
-        System.out.println(scheduler);
+        //System.out.println(scheduler);
     }
 
     @FXML

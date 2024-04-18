@@ -22,8 +22,8 @@ public class Controller1priority implements Initializable {
     @FXML
     private TableColumn<Job, String> ProcessesAdded;
 
-   // @FXML
-   // private TableView<Job> Table_processes;
+    // @FXML
+    // private TableView<Job> Table_processes;
     @FXML
     private Label algorithmType;
     @FXML
@@ -63,24 +63,39 @@ public class Controller1priority implements Initializable {
     @FXML
     private static int NoProcesses;
 
-    private SJF_Preemptive scheduler=new SJF_Preemptive(jobList);
+    private Scheduler scheduler;
+    @FXML
+    private Label Timer;
+    @FXML
+    private TextField ArrivalTime;
+
+    @FXML
+    private Label AvgTurnaround;
+
+    @FXML
+    private Label AvgWaiting;
 
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
-        int arrivalTime = 0; // You need to get this value from the GUI as well
+        int arrivalTime = Integer.parseInt(ArrivalTime.getText());
         int burstTime = Integer.parseInt(bursttime.getText());
         int priorityLevel = Integer.parseInt(priority.getText());
+
         // Create a new Job object with the retrieved values
         Job newJob = new Job(name, arrivalTime, burstTime, priorityLevel);
 
-        //jobList.add(newJob);
+        // Set the arrival time of the Job object
+        newJob.setArrivalTime(arrivalTime);
 
+        // Add the new job to the scheduler
         scheduler.enqueue(newJob);
-        //NoProcesses++;
-        updateTable();
 
+        // Update the table
+        updateTable();
     }
+
+
 
     boolean state =true;
     Timeline timeline=null;
@@ -112,6 +127,8 @@ public class Controller1priority implements Initializable {
 
         }else
         {
+            AvgTurnaround.setText(String.valueOf(scheduler.calculateAvgTurnaroundTime()));
+            AvgWaiting.setText(String.valueOf(scheduler.calculateAvgWaitingTime()));
             return false;
         }
 
@@ -121,8 +138,21 @@ public class Controller1priority implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
-
-
+        switch (HelloController.scheduler) {
+            case "PS Preemptive":
+                scheduler = new PriorityPreemptive(jobList);
+                break;
+            case "PS Non Preemptive":
+                scheduler = new priority_nonPreemptive(jobList);
+                break;
+            // Add cases for other scheduler types as needed
+            default:
+                // Default to SJF if the scheduler type is not recognized
+                scheduler = new priority_nonPreemptive(jobList);
+                break;
+        }
+        algorithmType.setText(HelloController.scheduler);
+        Timer.setText(Integer.toString(scheduler.getCurrentTime())); // doesn't work
     }
 
     public void updateTable()

@@ -32,7 +32,6 @@ public class FCFS extends Scheduler{
     private void arrangeJobs(){
         Collections.sort(jobs, new ArrangeJobs());
     }
-    
 
 }
 
