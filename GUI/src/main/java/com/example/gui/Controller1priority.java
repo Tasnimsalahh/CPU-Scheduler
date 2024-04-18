@@ -3,47 +3,38 @@ package com.example.gui;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller3_RR implements Initializable {
+public class Controller1priority implements Initializable {
     @FXML
     private TableColumn<Job, String> ProcessesAdded;
 
-    @FXML
-    private TableView<Job> Table;
-
-    @FXML
-    private TextField TimeQuantum;
-
-    @FXML
-    private Button addprocess;
-
+   // @FXML
+   // private TableView<Job> Table_processes;
     @FXML
     private Label algorithmType;
-
+    @FXML
+    private Label turnaroundField;
+    @FXML
+    private Label waitingField;
+    @FXML
+    private TableView<Job> Table;
+    private ObservableList<Job> jobList = FXCollections.observableArrayList();
     @FXML
     private AnchorPane anchor;
-
-    @FXML
-    private TableColumn<Job, Integer> burst_table;
-
     @FXML
     private TableColumn<Job, Integer> Arrival_table;
 
@@ -51,33 +42,37 @@ public class Controller3_RR implements Initializable {
     private TextField bursttime;
 
     @FXML
-    private TableColumn<Job, String> name_table;
+    private TextField priority;
 
     @FXML
     private TextField processname;
 
     @FXML
+    private Button addprocess;
+    @FXML
+    private TableColumn<Job, Integer> burst_table;
+
+    @FXML
+    private TableColumn<Job, String> name_table;
+
+    @FXML
+    private TableColumn<Job, Integer> priority_table;
+
+    @FXML
     private TableColumn<Job, Integer> waiting_table;
-    private ObservableList<Job> jobList = FXCollections.observableArrayList();
-    int Qtime;
-    public void addQuantum(ActionEvent actionEvent) {
-        Qtime = Integer.parseInt(TimeQuantum.getText());
-        //RR newRR = new RR(jobList,Qtime);
+    @FXML
+    private static int NoProcesses;
 
-    }
-
-    RR scheduler = new RR(jobList,Qtime);
-
-
-
+    private SJF_Preemptive scheduler=new SJF_Preemptive(jobList);
 
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
         int arrivalTime = 0; // You need to get this value from the GUI as well
         int burstTime = Integer.parseInt(bursttime.getText());
+        int priorityLevel = Integer.parseInt(priority.getText());
         // Create a new Job object with the retrieved values
-        Job newJob = new Job(name, arrivalTime, burstTime);
+        Job newJob = new Job(name, arrivalTime, burstTime, priorityLevel);
 
         //jobList.add(newJob);
 
@@ -87,9 +82,7 @@ public class Controller3_RR implements Initializable {
 
     }
 
-
-
-    @FXML
+    boolean state =true;
     Timeline timeline=null;
     @FXML
     void startSimulation(MouseEvent event) {
@@ -102,6 +95,7 @@ public class Controller3_RR implements Initializable {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
+
     public boolean scheduling() {
 
         Job currJob = scheduler.startScheduler();
@@ -122,19 +116,33 @@ public class Controller3_RR implements Initializable {
         }
 
     }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
+
+
     }
+
     public void updateTable()
     {
+        //algorithmType.setText(HelloController.scheduler);
+        //burst_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("burstTime"));
+        //waiting_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("waiting"));
+        //priority_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("priorityLevel"));
+
+
         name_table.setCellValueFactory(new PropertyValueFactory<>("name"));
         burst_table.setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
         waiting_table.setCellValueFactory(new PropertyValueFactory<>("waitingTime"));
+        priority_table.setCellValueFactory(new PropertyValueFactory<>("priorityLevel"));
         Arrival_table.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
+
 
         Table.setItems(jobList);
     }
+
 
 
 }

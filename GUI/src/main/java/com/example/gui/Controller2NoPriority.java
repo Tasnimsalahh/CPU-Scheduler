@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller2 implements Initializable {
+public class Controller2NoPriority implements Initializable {
     @FXML
     private TableColumn<Job, String> ProcessesAdded;
 

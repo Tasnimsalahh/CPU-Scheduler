@@ -24,6 +24,14 @@ public abstract class Scheduler {
         this.avgWaitingTime = 0;
 
     }
+    public void setJobs(List<Job>jobs)
+    {
+        this.jobs=jobs;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
 
     public float calculateAvgWaitingTime() {
         for (Job j : jobs) {

@@ -51,12 +51,13 @@ public class HelloController implements Initializable {
     void onNext(MouseEvent event) throws IOException {
         String num = NoProcesses.getText();
         System.out.print(num);
-        if (scheduler.equals("FCFS")) {
+        if (scheduler.equals( "PS Preemptive") ||scheduler.equals("PS Non Preemptive")) {
             Stage stage = (Stage) onNext.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample2.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("priority.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 700, 700);
-            stage.setTitle("Stage 3");
+            stage.setTitle("Stage 2");
             stage.setScene(scene);
+
 
         }else if(scheduler.equals("RR")){
             Stage stage = (Stage) onNext.getScene().getWindow();
@@ -66,13 +67,16 @@ public class HelloController implements Initializable {
             stage.setScene(scene);
         }
         else {
+
             Stage stage = (Stage) onNext.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample1.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("noPriority.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 700, 700);
-            stage.setTitle("Stage 2");
+            stage.setTitle("Stage 3");
             stage.setScene(scene);
         }
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
