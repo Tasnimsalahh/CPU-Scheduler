@@ -13,17 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller1priority implements Initializable {
-    @FXML
-    private TableColumn<Job, String> ProcessesAdded;
-
-    // @FXML
-    // private TableView<Job> Table_processes;
     @FXML
     private Label algorithmType;
     @FXML
@@ -35,6 +33,7 @@ public class Controller1priority implements Initializable {
     private ObservableList<Job> jobList = FXCollections.observableArrayList();
     @FXML
     private AnchorPane anchor;
+
     @FXML
     private TableColumn<Job, Integer> Arrival_table;
 
@@ -60,8 +59,6 @@ public class Controller1priority implements Initializable {
 
     @FXML
     private TableColumn<Job, Integer> waiting_table;
-    @FXML
-    private static int NoProcesses;
 
     private Scheduler scheduler;
     @FXML
@@ -74,7 +71,8 @@ public class Controller1priority implements Initializable {
 
     @FXML
     private Label AvgWaiting;
-
+    private boolean allProcessesAdded = false;
+    private int NoProccesses;
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
@@ -82,25 +80,42 @@ public class Controller1priority implements Initializable {
         int burstTime = Integer.parseInt(bursttime.getText());
         int priorityLevel = Integer.parseInt(priority.getText());
 
-        // Create a new Job object with the retrieved values
-        Job newJob = new Job(name, arrivalTime, burstTime, priorityLevel);
+        NoProccesses++;
 
-        // Set the arrival time of the Job object
-        newJob.setArrivalTime(arrivalTime);
 
-        // Add the new job to the scheduler
-        scheduler.enqueue(newJob);
+
+        /* for dynamic part*/
+        if (NoProccesses>HelloController.num) {
+            //addprocess.setDisable(true); // Disable the "Add Process" button
+            Job newJob = new Job(name,0, burstTime,priorityLevel);
+            scheduler.enqueue(newJob);
+        }
+        else {
+
+            // Create a new Job object with the retrieved values
+            Job newJob = new Job(name, arrivalTime, burstTime,priorityLevel);
+
+            jobList.add(newJob);
+        }
+        allProcessesAdded = jobList.size() == HelloController.num;
+
 
         // Update the table
         updateTable();
     }
 
-
-
-    boolean state =true;
     Timeline timeline=null;
     @FXML
     void startSimulation(MouseEvent event) {
+        if (!allProcessesAdded) {
+            // Display a message to the user or handle the case where all processes haven't been added
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Incomplete Process List");
+            alert.setContentText("Please add all processes before starting the simulation.");
+            alert.showAndWait();
+            return;
+        }
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             boolean hasMoreJobs = scheduling();
             if (!hasMoreJobs) {
@@ -113,7 +128,7 @@ public class Controller1priority implements Initializable {
 
     public boolean scheduling() {
 
-        Job currJob = scheduler.startScheduler();
+        Job currJob = scheduler.schedule();
         if (currJob != null) {
             for (int i = 0; i < jobList.size(); i++) {
                 if (jobList.get(i).getName().equals(currJob.getName())) {
@@ -122,6 +137,7 @@ public class Controller1priority implements Initializable {
                 }
 
             }
+            Timer.setText(Integer.toString(scheduler.getCurrentTime()));
             updateTable();
             return true;
 
@@ -133,7 +149,6 @@ public class Controller1priority implements Initializable {
         }
 
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -157,11 +172,7 @@ public class Controller1priority implements Initializable {
 
     public void updateTable()
     {
-        //algorithmType.setText(HelloController.scheduler);
-        //burst_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("burstTime"));
-        //waiting_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("waiting"));
-        //priority_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("priorityLevel"));
-
+        algorithmType.setText(HelloController.scheduler);
 
         name_table.setCellValueFactory(new PropertyValueFactory<>("name"));
         burst_table.setCellValueFactory(new PropertyValueFactory<>("remainingTime"));

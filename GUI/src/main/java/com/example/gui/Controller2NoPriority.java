@@ -9,10 +9,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -20,16 +27,12 @@ import java.util.ResourceBundle;
 
 public class Controller2NoPriority implements Initializable {
     @FXML
-    private TableColumn<Job, String> ProcessesAdded;
-
-    // @FXML
-    // private TableView<Job> Table_processes;
-    @FXML
     private Label algorithmType;
     @FXML
-    private Label turnaroundField;
+    private Label AvgTurnaround;
+
     @FXML
-    private Label waitingField;
+    private Label AvgWaiting;
     @FXML
     private TableView<Job> Table;
     private ObservableList<Job> jobList = FXCollections.observableArrayList();
@@ -42,9 +45,6 @@ public class Controller2NoPriority implements Initializable {
     private TextField bursttime;
 
     @FXML
-    private TextField priority;
-
-    @FXML
     private TextField processname;
 
     @FXML
@@ -54,34 +54,61 @@ public class Controller2NoPriority implements Initializable {
 
     @FXML
     private TableColumn<Job, String> name_table;
+    @FXML
+    private TextField ArrivalTime;
 
     @FXML
     private TableColumn<Job, Integer> waiting_table;
     @FXML
-    private static int NoProcesses;
+    private Label Timer;
 
+    private boolean allProcessesAdded = false;
     private Scheduler scheduler;
+    private  int NoProccesses;
 
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
-        int arrivalTime = 0; // You need to get this value from the GUI as well
+
         int burstTime = Integer.parseInt(bursttime.getText());
-        // Create a new Job object with the retrieved values
-        Job newJob = new Job(name, arrivalTime, burstTime);
+        int arrivalTime=Integer.parseInt(ArrivalTime.getText());
+        NoProccesses++;
 
-        //jobList.add(newJob);
 
-        scheduler.enqueue(newJob);
-        //NoProcesses++;
+
+        /* for dynamic part*/
+        if (NoProccesses>HelloController.num) {
+            //addprocess.setDisable(true); // Disable the "Add Process" button
+            Job newJob = new Job(name,0, burstTime);
+            scheduler.enqueue(newJob);
+        }
+        else {
+
+            // Create a new Job object with the retrieved values
+            Job newJob = new Job(name, arrivalTime, burstTime);
+
+            jobList.add(newJob);
+        }
+
+        allProcessesAdded = jobList.size() == HelloController.num;
         updateTable();
 
     }
 
-    boolean state =true;
+
     Timeline timeline=null;
     @FXML
     void startSimulation(MouseEvent event) {
+        if (!allProcessesAdded) {
+            // Display a message to the user or handle the case where all processes haven't been added
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Incomplete Process List");
+            alert.setContentText("Please add all processes before starting the simulation.");
+            alert.showAndWait();
+            return;
+        }
+        scheduler.setJobs(jobList);
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             boolean hasMoreJobs = scheduling();
             if (!hasMoreJobs) {
@@ -94,7 +121,8 @@ public class Controller2NoPriority implements Initializable {
 
     public boolean scheduling() {
 
-        Job currJob = scheduler.startScheduler();
+        Job currJob = scheduler.schedule();
+
         if (currJob != null) {
             for (int i = 0; i < jobList.size(); i++) {
                 if (jobList.get(i).getName().equals(currJob.getName())) {
@@ -103,11 +131,14 @@ public class Controller2NoPriority implements Initializable {
                 }
 
             }
+            Timer.setText(Integer.toString(scheduler.getCurrentTime()));
             updateTable();
             return true;
 
         }else
         {
+            AvgTurnaround.setText(String.valueOf(scheduler.calculateAvgTurnaroundTime()));
+            AvgWaiting.setText(String.valueOf(scheduler.calculateAvgWaitingTime()));
             return false;
         }
 
@@ -117,6 +148,7 @@ public class Controller2NoPriority implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
+       //updateGanttChart(null);
         switch (HelloController.scheduler) {
             case "FCFS":
                 scheduler = new FCFS(jobList);
@@ -135,18 +167,11 @@ public class Controller2NoPriority implements Initializable {
                 break;
         }
         algorithmType.setText(HelloController.scheduler);
-        //Timer.setText(Integer.toString(scheduler.getCurrentTime())); // doesn't work
+
 
     }
-
     public void updateTable()
     {
-        //algorithmType.setText(HelloController.scheduler);
-        //burst_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("burstTime"));
-        //waiting_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("waiting"));
-        //priority_table.setCellValueFactory(new PropertyValueFactory<Job,Integer>("priorityLevel"));
-
-
         name_table.setCellValueFactory(new PropertyValueFactory<>("name"));
         burst_table.setCellValueFactory(new PropertyValueFactory<>("remainingTime"));
         waiting_table.setCellValueFactory(new PropertyValueFactory<>("waitingTime"));
@@ -155,7 +180,5 @@ public class Controller2NoPriority implements Initializable {
 
         Table.setItems(jobList);
     }
-
-
 
 }
