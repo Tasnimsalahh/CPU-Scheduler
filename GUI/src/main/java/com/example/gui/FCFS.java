@@ -17,14 +17,14 @@ public class FCFS extends Scheduler{
         arrangeJobs();
         
         for(Job j: jobs){
-            if(j.getStatus() == Job.TERMINATED)
-                    continue;
+            if(availToRun(j)){
             j.setStatus(Job.RUNNING);
             j.setRemainingTime(j.getRemainingTime() - 1);
             if(j.getRemainingTime() == 0){
                 dequeue(j);
             }
             return j;
+            }
         }
         return null;
     }
