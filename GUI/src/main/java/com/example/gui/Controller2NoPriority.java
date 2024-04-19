@@ -165,6 +165,18 @@ public class Controller2NoPriority implements Initializable {
 
         }else
         {
+            if(currJob!= null) {
+                for (int i = 0; i < jobList.size(); i++) {
+                    if (jobList.get(i).getName().equals(currJob.getName())) {
+                        jobList.set(i, currJob);
+                        break;  // Stop after updating the first occurrence
+                    }
+                }
+            }
+
+            Timer.setText(Integer.toString(scheduler.getCurrentTime()));
+            updateGanttChart(currJob);
+            updateTable();
             AvgTurnaround.setText(String.valueOf(scheduler.calculateAvgTurnaroundTime()));
             AvgWaiting.setText(String.valueOf(scheduler.calculateAvgWaitingTime()));
             return false;
