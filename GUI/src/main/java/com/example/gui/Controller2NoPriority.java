@@ -23,10 +23,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import com.example.gui.GanttChart;
 
 public class Controller2NoPriority implements Initializable {
     @FXML
@@ -43,6 +40,8 @@ public class Controller2NoPriority implements Initializable {
     private AnchorPane anchor;
     @FXML
     private TableColumn<Job, Integer> Arrival_table;
+    @FXML
+    private StackPane ganttChartPane;
 
     @FXML
     private TextField bursttime;
@@ -68,12 +67,6 @@ public class Controller2NoPriority implements Initializable {
     private boolean allProcessesAdded = false;
     private Scheduler scheduler;
     private  int NoProccesses;
-    @FXML
-    private StackPane ganttChartPane; // Reference to the StackPane in FXML
-
-    @FXML
-    private GanttChart<String, Number> ganttChart;
-
 
     @FXML
     void addProcess(ActionEvent event) {
@@ -124,17 +117,12 @@ public class Controller2NoPriority implements Initializable {
                 timeline.stop();
             }
         }));
-
-        // Clear previous data from GanttChart
-        //ganttChart.getData().clear();
-
-        // Start updating the Gantt Chart with each scheduling iteration
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
-
     public boolean scheduling() {
+
         Job currJob = scheduler.schedule();
 
         if (currJob != null) {
@@ -143,24 +131,27 @@ public class Controller2NoPriority implements Initializable {
                     jobList.set(i, currJob);
                     break;  // Stop after updating the first occurrence
                 }
+
             }
             Timer.setText(Integer.toString(scheduler.getCurrentTime()));
+            updateGanttChart(currJob);
             updateTable();
-            // Add current job to Gantt Chart with its duration
-            ganttChart.addCurrentJob(currJob.getName(), scheduler.getCurrentTime());
             return true;
-        } else {
+
+        }else
+        {
             AvgTurnaround.setText(String.valueOf(scheduler.calculateAvgTurnaroundTime()));
             AvgWaiting.setText(String.valueOf(scheduler.calculateAvgWaitingTime()));
             return false;
         }
-    }
 
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
+        //updateGanttChart(null);
         switch (HelloController.scheduler) {
             case "FCFS":
                 scheduler = new FCFS(jobList);
@@ -171,22 +162,38 @@ public class Controller2NoPriority implements Initializable {
             case "SJF Non Preemptive":
                 scheduler = new SJF_nonPreemptive(jobList);
                 break;
+
+            // Add cases for other scheduler types as needed
             default:
+                // Default to SJF if the scheduler type is not recognized
                 scheduler = new FCFS(jobList);
                 break;
         }
         algorithmType.setText(HelloController.scheduler);
-        initializeGanttChart(); // Initialize GanttChart
-        //updateGanttChart();     // Update GanttChart after initialization
+
+
     }
+    static double rectX=-444;
+    static double textX=-444;
+    public void updateGanttChart(Job currJob) {
+
+        double rectHeight = 125; // Fixed height for each rectangle
+        double rectWidth = 25; // Fixed width for each rectangle
 
 
-    private void initializeGanttChart() {
-        // Check if the ganttChartPane already contains the ganttChart
-        if (!ganttChartPane.getChildren().contains(ganttChart)) {
-            // Add GanttChart to the StackPane only if it's not already added
-            ganttChartPane.getChildren().add(ganttChart);
-        }
+        // Update the rectangle for the current process if it's running
+        Rectangle rect = new Rectangle(rectWidth, rectHeight, Color.AQUAMARINE);
+        rect.setTranslateX(rectX);
+        rect.setFill(Color.rgb(224, 145, 69));
+        rect.setStroke(Color.BLACK);
+
+        rectX+=25;
+
+        Text text = new Text(currJob.getName());
+        text.setFill(Color.BLACK);
+        text.setTranslateX(textX);
+        textX+=25;
+        ganttChartPane.getChildren().addAll(rect, text);
     }
 
     public void updateTable()
@@ -198,21 +205,6 @@ public class Controller2NoPriority implements Initializable {
 
 
         Table.setItems(jobList);
-        updateGanttChart();
-
     }
-    private void updateGanttChart () {
-        List<String> jobNames = new ArrayList<>();
-        for (Job job : jobList) {
-            jobNames.add(job.getName());
-        }
 
-        // Clear previous data from GanttChart
-        //ganttChart.getData().clear();
-
-        // Add new data to GanttChart using the list of job names
-      //  ganttChart.addJob(jobNames);
-
-
-}
 }
