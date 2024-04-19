@@ -90,5 +90,6 @@
             </font>
         </Label>
       <StackPane fx:id="ganttChartPane" layoutX="39.0" layoutY="528.0" prefHeight="150.0" prefWidth="888.0" />
+      <Button fx:id="startInstant" layoutX="529.0" layoutY="467.0" mnemonicParsing="false" onMouseClicked="#startInstant" prefHeight="26.0" prefWidth="125.0" text="Start instant" />
     </children>
 </AnchorPane>
