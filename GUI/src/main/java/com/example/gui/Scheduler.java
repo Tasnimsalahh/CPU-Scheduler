@@ -49,6 +49,13 @@ public abstract class Scheduler {
         return avgTurnaroundTime;
     }
 
+    public boolean allProcessesTerminated(){
+        for (Job j: jobs) {
+            if (j.getStatus() != Job.TERMINATED) return false;
+        }
+        return true;
+    }
+
 
     public void setAvgWaitingTime(int avgWaitingTime) {
         this.avgWaitingTime = avgWaitingTime;

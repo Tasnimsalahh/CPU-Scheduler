@@ -3,15 +3,12 @@ package com.example.gui;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -78,10 +75,6 @@ public class Controller1priority implements Initializable {
     private Label AvgWaiting;
     private boolean allProcessesAdded = false;
     private int NoProccesses;
-
-    private GanttChart<String, Long> ganttChart;
-
-
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
@@ -199,8 +192,7 @@ public class Controller1priority implements Initializable {
                 break;
         }
         algorithmType.setText(HelloController.scheduler);
-        Timer.setText(Integer.toString(scheduler.getCurrentTime()));
-
+        Timer.setText(Integer.toString(scheduler.getCurrentTime())); // doesn't work
     }
 
     public void updateTable()

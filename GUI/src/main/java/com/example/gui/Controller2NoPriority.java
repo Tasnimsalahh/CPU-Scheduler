@@ -120,6 +120,13 @@ public class Controller2NoPriority implements Initializable {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
+    @FXML
+    void startInstant(MouseEvent event) {
+        Job currJob=scheduler.schedule();
+        updateGanttChart(currJob);
+        updateTable();
+
+    }
 
     public boolean scheduling() {
 
