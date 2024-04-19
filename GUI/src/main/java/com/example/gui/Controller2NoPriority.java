@@ -122,9 +122,24 @@ public class Controller2NoPriority implements Initializable {
     }
     @FXML
     void startInstant(MouseEvent event) {
-        Job currJob=scheduler.schedule();
-        updateGanttChart(currJob);
-        updateTable();
+        if (!allProcessesAdded) {
+            // Display a message to the user or handle the case where all processes haven't been added
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Incomplete Process List");
+            alert.setContentText("Please add all processes before starting the simulation.");
+            alert.showAndWait();
+            return;
+        }
+        scheduler.setJobs(jobList);
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.0001), e -> {
+            boolean hasMoreJobs = scheduling();
+            if (!hasMoreJobs) {
+                timeline.stop();
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
 
     }
 
@@ -132,14 +147,16 @@ public class Controller2NoPriority implements Initializable {
 
         Job currJob = scheduler.schedule();
 
-        if (currJob != null) {
-            for (int i = 0; i < jobList.size(); i++) {
-                if (jobList.get(i).getName().equals(currJob.getName())) {
-                    jobList.set(i, currJob);
-                    break;  // Stop after updating the first occurrence
+        if (!scheduler.allProcessesTerminated()) {
+            if(currJob!= null) {
+                for (int i = 0; i < jobList.size(); i++) {
+                    if (jobList.get(i).getName().equals(currJob.getName())) {
+                        jobList.set(i, currJob);
+                        break;  // Stop after updating the first occurrence
+                    }
                 }
-
             }
+
             Timer.setText(Integer.toString(scheduler.getCurrentTime()));
             updateGanttChart(currJob);
             updateTable();
@@ -187,19 +204,23 @@ public class Controller2NoPriority implements Initializable {
         double rectHeight = 125; // Fixed height for each rectangle
         double rectWidth = 25; // Fixed width for each rectangle
 
-
         // Update the rectangle for the current process if it's running
         Rectangle rect = new Rectangle(rectWidth, rectHeight, Color.AQUAMARINE);
         rect.setTranslateX(rectX);
         rect.setFill(Color.rgb(224, 145, 69));
         rect.setStroke(Color.BLACK);
+        rectX += 25;
+        Text text;
+        if(currJob != null) {
+             text = new Text(currJob.getName());
+        }
+        else {
+            text = new Text("idle");
 
-        rectX+=25;
-
-        Text text = new Text(currJob.getName());
+        }
         text.setFill(Color.BLACK);
         text.setTranslateX(textX);
-        textX+=25;
+        textX += 25;
         ganttChartPane.getChildren().addAll(rect, text);
     }
 

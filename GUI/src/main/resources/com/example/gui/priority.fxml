@@ -71,7 +71,7 @@
             <Font name="System Bold Italic" size="14.0" />
          </font></Text>
       <TextField fx:id="ArrivalTime" layoutX="165.0" layoutY="191.0" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #FCD9B8;" />
-      <Button fx:id="startSimulation" layoutX="795.0" layoutY="479.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="26.0" prefWidth="71.0" style="-fx-background-color: #FCD9B8;" text="Start">
+      <Button fx:id="startSimulation" layoutX="843.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="26.0" prefWidth="71.0" style="-fx-background-color: #FCD9B8;" text="Start Live">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
@@ -96,5 +96,10 @@
          </font>
       </Label>
       <StackPane fx:id="ganttChartPane" layoutX="39.0" layoutY="528.0" prefHeight="150.0" prefWidth="888.0" />
+      <Button fx:id="startInstant" layoutX="635.0" layoutY="479.0" mnemonicParsing="false" onMouseClicked="#startInstant" style="-fx-background-color: #FCD9B8;" text="Start Instant">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

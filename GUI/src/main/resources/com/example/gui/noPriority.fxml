@@ -60,7 +60,7 @@
          </font></Button>
         <TextField fx:id="processname" layoutX="166.0" layoutY="94.0" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #FCD9B8;" />
         <TextField fx:id="bursttime" layoutX="166.0" layoutY="126.0" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #FCD9B8;" />
-        <Button fx:id="startSimulation" layoutX="766.0" layoutY="467.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="19.0" prefWidth="62.0" style="-fx-background-color: #FCD9B8;" text="Start">
+        <Button fx:id="startSimulation" layoutX="840.0" layoutY="467.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="26.0" prefWidth="102.0" style="-fx-background-color: #FCD9B8;" text="Start Live">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
@@ -90,6 +90,9 @@
             </font>
         </Label>
       <StackPane fx:id="ganttChartPane" layoutX="39.0" layoutY="528.0" prefHeight="150.0" prefWidth="888.0" />
-      <Button fx:id="startInstant" layoutX="529.0" layoutY="467.0" mnemonicParsing="false" onMouseClicked="#startInstant" prefHeight="26.0" prefWidth="125.0" text="Start instant" />
+      <Button fx:id="startInstant" layoutX="616.0" layoutY="467.0" mnemonicParsing="false" onMouseClicked="#startInstant" prefHeight="26.0" prefWidth="125.0" style="-fx-background-color: #FCD9B8;" text="Start instant">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
     </children>
 </AnchorPane>
