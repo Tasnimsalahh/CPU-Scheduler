@@ -40,6 +40,8 @@ public class Controller2NoPriority implements Initializable {
     private AnchorPane anchor;
     @FXML
     private TableColumn<Job, Integer> Arrival_table;
+    @FXML
+    private StackPane ganttChartPane;
 
     @FXML
     private TextField bursttime;
@@ -132,6 +134,7 @@ public class Controller2NoPriority implements Initializable {
 
             }
             Timer.setText(Integer.toString(scheduler.getCurrentTime()));
+            updateGanttChart(currJob);
             updateTable();
             return true;
 
@@ -148,7 +151,7 @@ public class Controller2NoPriority implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();
-       //updateGanttChart(null);
+        //updateGanttChart(null);
         switch (HelloController.scheduler) {
             case "FCFS":
                 scheduler = new FCFS(jobList);
@@ -170,6 +173,29 @@ public class Controller2NoPriority implements Initializable {
 
 
     }
+    static double rectX=-444;
+    static double textX=-444;
+    public void updateGanttChart(Job currJob) {
+
+        double rectHeight = 125; // Fixed height for each rectangle
+        double rectWidth = 25; // Fixed width for each rectangle
+
+
+        // Update the rectangle for the current process if it's running
+        Rectangle rect = new Rectangle(rectWidth, rectHeight, Color.AQUAMARINE);
+        rect.setTranslateX(rectX);
+        rect.setFill(Color.rgb(224, 145, 69));
+        rect.setStroke(Color.BLACK);
+
+        rectX+=25;
+
+        Text text = new Text(currJob.getName());
+        text.setFill(Color.BLACK);
+        text.setTranslateX(textX);
+        textX+=25;
+        ganttChartPane.getChildren().addAll(rect, text);
+    }
+
     public void updateTable()
     {
         name_table.setCellValueFactory(new PropertyValueFactory<>("name"));

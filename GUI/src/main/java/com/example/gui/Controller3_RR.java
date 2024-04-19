@@ -12,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -68,6 +71,8 @@ public class Controller3_RR implements Initializable {
     private TableColumn<Job, Integer> waiting_table;
     @FXML
     private Label Timer;
+    @FXML
+    private StackPane ganttChartPane;
     private ObservableList<Job> jobList = FXCollections.observableArrayList();
     private  int NoProccesses;
     int Qtime=-1;
@@ -143,6 +148,28 @@ public class Controller3_RR implements Initializable {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
+    static double rectX=-444;
+    static double textX=-444;
+    public void updateGanttChart(Job currJob) {
+
+        double rectHeight = 125; // Fixed height for each rectangle
+        double rectWidth = 25; // Fixed width for each rectangle
+
+
+        // Update the rectangle for the current process if it's running
+        Rectangle rect = new Rectangle(rectWidth, rectHeight, Color.AQUAMARINE);
+        rect.setTranslateX(rectX);
+        rect.setFill(Color.rgb(224, 145, 69));
+        rect.setStroke(Color.BLACK);
+
+        rectX+=25;
+
+        Text text = new Text(currJob.getName());
+        text.setFill(Color.BLACK);
+        text.setTranslateX(textX);
+        textX+=25;
+        ganttChartPane.getChildren().addAll(rect, text);
+    }
     public boolean scheduling() {
 
         Job currJob = scheduler.schedule();
@@ -155,6 +182,7 @@ public class Controller3_RR implements Initializable {
 
             }
             Timer.setText(Integer.toString(scheduler.getCurrentTime()));
+            updateGanttChart(currJob);
             updateTable();
             return true;
 

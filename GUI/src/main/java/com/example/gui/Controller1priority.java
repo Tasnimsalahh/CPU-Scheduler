@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -50,7 +51,8 @@ public class Controller1priority implements Initializable {
     private Button addprocess;
     @FXML
     private TableColumn<Job, Integer> burst_table;
-
+    @FXML
+    private StackPane ganttChartPane;
     @FXML
     private TableColumn<Job, String> name_table;
 
@@ -138,6 +140,7 @@ public class Controller1priority implements Initializable {
 
             }
             Timer.setText(Integer.toString(scheduler.getCurrentTime()));
+            updateGanttChart(currJob);
             updateTable();
             return true;
 
@@ -148,6 +151,28 @@ public class Controller1priority implements Initializable {
             return false;
         }
 
+    }
+    static double rectX=-444;
+    static double textX=-444;
+    public void updateGanttChart(Job currJob) {
+
+        double rectHeight = 125; // Fixed height for each rectangle
+        double rectWidth = 25; // Fixed width for each rectangle
+
+
+        // Update the rectangle for the current process if it's running
+        Rectangle rect = new Rectangle(rectWidth, rectHeight, Color.AQUAMARINE);
+        rect.setTranslateX(rectX);
+        rect.setFill(Color.rgb(224, 145, 69));
+        rect.setStroke(Color.BLACK);
+
+        rectX+=25;
+
+        Text text = new Text(currJob.getName());
+        text.setFill(Color.BLACK);
+        text.setTranslateX(textX);
+        textX+=25;
+        ganttChartPane.getChildren().addAll(rect, text);
     }
 
     @Override
