@@ -91,9 +91,12 @@ public class Controller3_RR implements Initializable {
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
-        int arrivalTime = Integer.parseInt(ArrivalTime.getText());
+        int arrivalTime = 0;
+        if (!ArrivalTime.isDisable()) arrivalTime = Integer.parseInt(ArrivalTime.getText());
         int burstTime = Integer.parseInt(bursttime.getText());
-
+        processname.clear(); // empty textfields for new inputs
+        ArrivalTime.clear();
+        bursttime.clear();
         NoProccesses++;
         /* for dynamic part*/
 
@@ -138,6 +141,7 @@ public class Controller3_RR implements Initializable {
             return;
         }
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            ArrivalTime.setDisable(true);
             boolean hasMoreJobs = scheduling();
             if (!hasMoreJobs) {
                 timeline.stop();

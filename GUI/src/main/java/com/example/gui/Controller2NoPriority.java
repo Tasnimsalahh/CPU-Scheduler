@@ -68,9 +68,12 @@ public class Controller2NoPriority implements Initializable {
     @FXML
     void addProcess(ActionEvent event) {
         String name = processname.getText();
-
         int burstTime = Integer.parseInt(bursttime.getText());
-        int arrivalTime=Integer.parseInt(ArrivalTime.getText());
+        int arrivalTime = 0;
+        if (!ArrivalTime.isDisable()) arrivalTime = Integer.parseInt(ArrivalTime.getText());
+        processname.clear(); // empty textfields for new inputs
+        ArrivalTime.clear();
+        bursttime.clear();
         NoProccesses++;
 
 
@@ -109,6 +112,7 @@ public class Controller2NoPriority implements Initializable {
         }
         scheduler.setJobs(jobList);
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            ArrivalTime.setDisable(true);
             boolean hasMoreJobs = scheduling();
             if (!hasMoreJobs) {
                 timeline.stop();
